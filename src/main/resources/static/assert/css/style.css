@@ -1,0 +1,77 @@
+/*==================================*/
+textarea{resize:none}
+img{display: block;}
+body{zoom: 1;}
+img{-webkit-transition:All 0.20s ease;-moz-transition:All 0.20s ease ;-ms-transition:All 0.20s ease;-o-transition:All 0.20s ease;transition:All 0.20s ease;}
+a:hover{color: #fff100;}
+
+/*公共主框架*/
+.wrapper{position: relative;overflow: hidden;width: 100%;height: 100%;margin: 0;padding: 0;border: none;}
+
+/*首页主框架*/
+.main{ width:100%; margin: 0;padding: 0;height: 100%;}
+
+/*主题乐园*/
+.content{position: relative;overflow: hidden;width: 100%;}
+.content .conmain{position: relative;overflow: initial;width: 1200px;margin: 0 auto;padding-top: 0;}
+.content .titimg{position: relative;display: block;margin: 11% auto 1.5%;}
+@media only screen and (max-width:1441px ) {
+	.content .titimg{margin: 10% auto 1.5%;}
+}
+
+/*主题乐园-欢乐海洋*/
+#single .return{display: block;position: absolute;top: 32%;left: 3.75%;width: 48px;height: 48px;}
+
+/*右侧content_r*/
+.conmain .content_r .contop{width: 100%;position: relative;width: 100%;background-size: 100%;height: 58px;}
+.content_r .content_main{position: relative;width: 100%;background: #fff;}
+.content_r .content_main .path{position: relative;width: 100%;height: 60px;padding-top: 8px;margin-bottom: 36px;}
+.content_r .content_main .path p{position: relative;float: right;line-height: 60px;font-size: 12px;color: #a5a5a5;margin-right: 22px;}
+.content_r .content_main .path p span{color: #fd8300;padding: 0 3px;}
+.content_r .content_main .path h3{position: relative;float: left;font-size: 24px;color: #fd8300;line-height: 60px;font-weight: normal;margin-left: 26px;}
+/*.content_r .content_main .content_primary{position: relative;width: 848px;margin: 0 auto;padding-bottom: 50px;overflow: hidden;}*/
+
+/*玩转乐园*/
+table, tr, th, td {vertical-align: middle;}
+.wzly{background:  center top no-repeat #fff;}
+
+/*园区地图*/
+.yqdt ul li{position: relative;overflow: hidden;margin-top: 0;width: 100%;}
+.yqdt ul li .titimg{position: absolute;top: 0;left: 0;display: block;z-index: 99;margin: 0;}
+.yqdt ul li .txt{position: relative;overflow: hidden;width: 790px;border: solid 2px #fafafa;border-radius: 6px;margin-top: 21px;margin-left: 10px;}
+.yqdt ul li .txt p{font-size: 14px;line-height: 30px;color: #373737;position: relative;overflow: hidden;word-break: break-all;word-wrap: break-word; }
+
+.fx_ewm{width: 262px;display: block;position: fixed;top: 34.5%;left: 50%;margin-left: -131px;cursor: pointer;z-index: 9999}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

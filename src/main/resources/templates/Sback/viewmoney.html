@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>旅游管理系统</title>
+	<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js" th:src="@{/assert/js/jq.js}"></script>
+	<!-- 引入 echarts.js -->
+	<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js" th:src="@{/assert/js/echarts.min.js}"></script>
+	<link rel="stylesheet" href="../../layui/css/layui.css" th:href="@{/assert/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img th:src="@{/assert/img/logo/HLG.png}" style="width: 50%; height: 120%;"/>
+
+		</div>
+		<ul class="layui-nav layui-layout-left">
+		   <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷管理系统</a></li>
+		</ul>
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+					武汉欢迎您：&nbsp;&nbsp;商家
+				</a>
+			</li>
+			<li class="layui-nav-item">
+				<a th:href="@{/}"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+					告辞
+				</a>
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;商家管理</a>
+					<dl class="layui-nav-child">
+						<dd><a th:href="@{/back}">商品管理</a></dd>
+						<dd><a th:href="@{/warehouse}">仓库管理</a></dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+					<dl class="layui-nav-child">
+						<dd><a th:href="@{/viewproduct}">热门商品</a></dd>
+						<dd><a th:href="@{/viewmoney}">盈利情况</a></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <div class="layui-body">
+		<div style="padding: 15px;">
+			<div id="main" style="width: 600px;height:400px;"></div>
+			<script type="text/javascript">
+				// 基于准备好的dom，初始化echarts实例
+				var myChart = echarts.init(document.getElementById('main'));
+
+				$.when(
+						$.getScript('https://www.runoob.com/static/js/timelineGDP.js'),
+						$.getScript('https://www.runoob.com/static/js/draggable.js')
+				).done(function () {
+
+					draggable.init(
+							$('div[_echarts_instance_]')[0],
+							myChart,
+							{
+								width: 700,
+								height: 400,
+								throttle: 70
+							}
+					);
+					myChart.hideLoading();
+					option = {
+						baseOption: {
+							title : {
+								text: '商品盈利情况分析图',
+								subtext: '武汉欢乐谷商家',
+								x:'center'
+							},
+							tooltip : {
+								// 鼠标点上去的数值
+								trigger: 'item',
+								formatter: "{a} <br/>{b} : {c} ({d}%)"
+							},
+							legend: {
+								data:[/*'钥匙扣','文化衫','帽子','玩偶','雨衣','杯子','挂坠'*/]
+							},
+							toolbox: {
+								// 右上角
+								show : true,
+								feature : {
+									mark : {show: true},
+									dataView : {show: true, readOnly: false},
+									magicType : {
+										show: true,
+										type: ['pie', 'funnel']
+									},
+									restore : {show: true},
+									saveAsImage : {show: true}
+								}
+							},
+							calculable : true,
+							series : [
+								{
+									name:'半径模式',
+									type:'pie',
+									roseType : 'radius',
+									label: {
+										normal: {
+											show: false
+										},
+										emphasis: {
+											show: true
+										}
+									},
+									lableLine: {
+										normal: {
+											show: false
+										},
+										emphasis: {
+											show: true
+										}
+									},
+									data:[
+									/*	{value:1326, name:'钥匙扣'},
+										{value:1798, name:'文化衫'},
+										{value:3611, name:'帽子'},
+										{value:5775, name:'玩偶'},
+										{value:2448, name:'雨衣'},
+										{value:1720, name:'杯子'},
+										{value:4224, name:'挂坠'},*/
+									]
+								},
+								{
+									name:'面积模式',
+									type:'pie',
+									roseType : 'area',
+									data:[
+										/*{value:1326, name:'钥匙扣'},
+										{value:1798, name:'文化衫'},
+										{value:3611, name:'帽子'},
+										{value:5775, name:'玩偶'},
+										{value:2448, name:'雨衣'},
+										{value:1720, name:'杯子'},
+										{value:4224, name:'挂坠'},*/
+									]
+								}
+							]
+						},
+						media: [
+							{
+								option: {
+									legend: {
+										right: 'center',
+										bottom: 0,
+										orient: 'horizontal'
+									},
+									series: [
+										{
+											radius: [20, '50%'],
+											center: ['25%', '50%']
+										},
+										{
+											radius: [30, '50%'],
+											center: ['75%', '50%']
+										}
+									]
+								}
+							},
+							{
+								query: {
+									minAspectRatio: 1
+								},
+								option: {
+									legend: {
+										right: 'center',
+										bottom: 0,
+										orient: 'horizontal'
+									},
+									series: [
+										{
+											radius: [20, '50%'],
+											center: ['25%', '50%']
+										},
+										{
+											radius: [30, '50%'],
+											center: ['75%', '50%']
+										}
+									]
+								}
+							},
+							{
+								query: {
+									maxAspectRatio: 1
+								},
+								option: {
+									legend: {
+										right: 'center',
+										bottom: 0,
+										orient: 'horizontal'
+									},
+									series: [
+										{
+											radius: [20, '50%'],
+											center: ['50%', '30%']
+										},
+										{
+											radius: [30, '50%'],
+											center: ['50%', '70%']
+										}
+									]
+								}
+							},
+							{
+								query: {
+									maxWidth: 500
+								},
+								option: {
+									legend: {
+										right: 10,
+										top: '15%',
+										orient: 'vertical'
+									},
+									series: [
+										{
+											radius: [20, '50%'],
+											center: ['50%', '30%']
+										},
+										{
+											radius: [30, '50%'],
+											center: ['50%', '75%']
+										}
+									]
+								}
+							}
+						]
+					};
+					myChart.setOption(option);
+                    var names=[];
+                    var values=[];
+					$.ajax({
+						url:"viewmoneys",
+                        async:false,
+                        cache:false,
+						success:function (data) {
+                            for(var i=0;i<data.length;i++){
+                                names.push(data[i].name);
+                                values.push(data[i].value);
+                            }
+                            myChart.setOption({
+                                legend: {
+                                    data:names
+                                },
+                                series : [
+                                    {
+                                        name:'半径模式',
+                                        type:'pie',
+                                        roseType : 'radius',
+                                        label: {
+                                            normal: {
+                                                show: false
+                                            },
+                                            emphasis: {
+                                                show: true
+                                            }
+                                        },
+                                        lableLine: {
+                                            normal: {
+                                                show: false
+                                            },
+                                            emphasis: {
+                                                show: true
+                                            }
+                                        },
+                                        data:data
+                                    },
+                                    {
+                                        name:'面积模式',
+                                        type:'pie',
+                                        roseType : 'area',
+                                        data:data
+                                    }
+                                ]
+							})
+                        }
+					})
+				});
+			</script>
+		</div>
+	</div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © FeiYi.com - 供应商仓库管理
+    </div>
+</div>
+<script src="../../layui/layui.js" th:src="@{/assert/layui/layui.js}" charset="utf-8"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>旅游管理系统</title>
+	<link rel="stylesheet" href="../../static/assert/layui/css/layui.css" th:href="@{/assert/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img src="../../static/assert/img/logo/HLG.png" th:src="@{/assert/img/logo/HLG.png}" style="width: 50%; height: 120%;"/>
+		</div>
+		<ul class="layui-nav layui-layout-left">
+		   <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷管理系统</a></li>
+		</ul>
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+					武汉欢迎您：&nbsp;&nbsp;商家
+				</a>
+			</li>
+			<li class="layui-nav-item">
+				<a href="login.html"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+					告辞
+				</a>
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;商家管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/back}">商品管理</a></dd>
+                        <dd><a th:href="@{/warehouse}">仓库管理</a></dd>
+                    </dl>
+                </li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+					<dl class="layui-nav-child">
+                        <dd><a th:href="@{/viewproduct}">热门商品</a></dd>
+                        <dd><a th:href="@{/viewmoney}">盈利情况</a></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>/
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <!-- 搜索框 -->
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <form action="usersSearchback" method="post">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">账号名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">库管名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                            </button>&nbsp;
+                            <button type="button" class="layui-btn " onclick="doAdd()">
+                                <i class="layui-icon">&#xe608;</i> 添加
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 表格 -->
+            <div style="width:100%">
+                <div class="layui-form">
+                    <form class="layui-form">
+                        <table class="layui-table" id="test" lay-filter="test">
+                            <colgroup>
+                                <col width="20">
+                                <col width="70">
+                                <col width="70">
+                                <col width="70">
+                                <col width="70">
+                                <col width="70">
+                            </colgroup>
+                            <thead class="checkallbox">
+                            <tr >
+                                <th><input lay-skin="primary" type="checkbox" id="checkall" name="check" lay-filter="allChoose" value="checkall"/></th>
+                                <th>仓库号</th>
+                                <th>库管</th>
+                                <th>现存商品</th>
+                                <th>描述信息</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody class="seach-box">
+                            <!-- <c:forEach items="${pageBean.plist}" var="product"> -->
+                            <tr id="table">
+                                <td><input type="checkbox" title="" lay-skin="primary" name="checkone"></td>
+                                <td class="center" id="id">1</td>
+                                <td class="center" >小王</td>
+                                <td class="center" >口号30支</td>
+                                <td class="center" >仓库尚在管理，还有空位</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs" id="update" >编辑</button>
+                                    <button type="button" class="layui-btn layui-btn-danger layui-btn-xs" id="delete" >删除</button>
+                                </td>
+                            </tr>
+                            <!-- </c:forEach> -->
+                            </tbody>
+                        </table>
+                    </form>
+               </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © Travel.com - 供应商仓库管理
+    </div>
+</div>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+</body>
+</html>
+

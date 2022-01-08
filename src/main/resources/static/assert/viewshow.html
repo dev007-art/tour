@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>旅游管理系统</title>
+		<script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+		<!-- 引入 echarts.js -->
+		<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+        <link rel="stylesheet" href="layui/css/layui.css">
+
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<script>
+			$(function () {
+				$("#viewmap").click(function () {
+					$.ajax({
+						url:"/Ybacks",
+						type:"post",
+						success:function () {
+							window.location.href="/Yback";
+                        }
+					})
+                })
+                $("#Yview").click(function () {
+                    $.ajax({
+                        url:"/Yviews",
+                        type:"post",
+                        success:function () {
+                            window.location.href="/Yview";
+                        }
+                    })
+                })
+            })
+		</script>
+		<script type="text/javascript" src="swfobject.js">
+		</script>
+		<script type="text/javascript">
+
+			function hideUrlBar() {
+				// hide URL field on the iPhone/iPod touch
+				var p = String(navigator.platform);
+
+				container = document.getElementById("container");
+				if( p === 'iPad' || p === 'iPhone' || p === 'iPod touch' ){
+					var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+					if (parseInt(v[1], 10)>=7) {
+						// iOS >=7
+						if (container) {
+							container.style.top=(0) + "px";
+							container.style.left=(0) + "px";
+							container.style.width=(window.innerWidth) + "px";
+							container.style.height=(window.innerHeight) + "px";
+							if (pano) {
+								pano.setViewerSize(window.innerWidth, window.innerHeight);
+							}						}
+						window.scrollTo(0, 0);
+					} else {
+						if (container) {
+							var cheight;
+							switch(window.innerHeight) {
+								case 208:cheight=268; break; // landscape
+								case 260:cheight=320; break; // landscape, fullscreen
+								case 336:cheight=396; break; // portrait, in call status bar
+								case 356:cheight=416; break; // portrait
+								case 424:cheight=484; break; // portrait iPhone5, in call status bar
+								case 444:cheight=504; break; // portrait iPhone5
+								default: cheight=window.innerHeight;
+							}
+							if ((cheight) && ((container.offsetHeight!=cheight) || (window.innerHeight!=cheight))) {
+								container.style.height=cheight + "px";
+							}
+						}
+						document.getElementsByTagName("body")[0].style.marginTop="1px";
+						window.scrollTo(0, 1);
+					}
+				}
+			}
+			if (window.addEventListener) {
+				window.addEventListener("load", hideUrlBar);
+				window.addEventListener("resize", hideUrlBar);
+				window.addEventListener("orientationchange", hideUrlBar);
+			}
+
+		</script>
+		<style type="text/css" title="Default">
+			body, div, h1, h2, h3, span, p {
+				font-family: Verdana,Arial,Helvetica,sans-serif;
+				color: #000000;
+			}
+			body {
+				font-size: 10pt;
+				background : #ffffff;
+			}
+			table,tr,td {
+				font-size: 10pt;
+				border-color : #777777;
+				background : #dddddd;
+				color: #000000;
+				border-style : solid;
+				border-width : 2px;
+				padding: 5px;
+				border-collapse:collapse;
+			}
+			h1 {
+				font-size: 18pt;
+			}
+			h2 {
+				font-size: 14pt;
+			}
+			.warning {
+				font-weight: bold;
+			}
+			/* fix for scroll bars on webkit & Mac OS X Lion */
+			::-webkit-scrollbar {
+				background-color: rgba(0,0,0,0.5);
+				width: 0.75em;
+			}
+			::-webkit-scrollbar-thumb {
+				background-color:  rgba(255,255,255,0.5);
+			}
+			.box {
+				position: relative;
+				top: -550px;
+				left: 162%;
+				width: 320px;
+				height: 550px;
+				background: #000;
+				box-shadow: 0 30px 30px rgba(0, 0, 0, .5);
+			}
+
+			.box .imgBx {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.box .imgBx img {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: 0.5s;
+			}
+
+			.box:hover .imgBx img {
+				opacity: 0;
+			}
+
+			.box .content {
+				position: absolute;
+				bottom: 20px;
+				left: 10%;
+				width: 80%;
+				height: 60px;
+				background: #fff;
+				transition: 0.5s;
+				overflow: hidden;
+				padding: 15px;
+				box-sizing: border-box;
+			}
+
+			.box:hover .content {
+				width: 100%;
+				height: 100%;
+				bottom: 0;
+				left: 0;
+			}
+
+			.box .content h3 {
+				margin: 0;
+				padding: 0;
+				font-size: 20px;
+			}
+
+			.box .content p {
+				margin: 10px 0 0;
+				padding: 0;
+				opacity: 0;
+				line-height: 1.2em;
+				transition: 0.5s;
+				text-align: justify;
+			}
+
+			.box:hover .content p {
+				opacity: 1;
+				transition-delay: 0.5s;
+			}
+
+		</style>
+	</head>
+	<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<div class="layui-header">
+			<div class="layui-logo">
+				<img src="./img/logo/HLG.png" style="width: 50%; height: 120%;"/>
+
+			</div>
+			<ul class="layui-nav layui-layout-left">
+				<li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷可视化管理系统</a></li>
+			</ul>
+			<!-- 头部区域（可配合layui已有的水平导航） -->
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item">
+					<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+						武汉欢迎您：&nbsp;&nbsp;游客
+					</a>
+				</li>
+				<li class="layui-nav-item">
+					<a href="../../templates/login.html"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+						告辞
+					</a>
+			</ul>
+		</div>
+		<div class="layui-side layui-bg-black">
+			<div class="layui-side-scroll">
+				<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+				<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+					<li class="layui-nav-item layui-nav-itemed">
+						<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;欢乐谷展示</a>
+						<dl class="layui-nav-child">
+							<dd><a href="html/Yback/viewmap.html" id="viewmap">区域地图</a></dd>
+							<dd><a href="#">虚拟展厅</a></dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item layui-nav-itemed">
+						<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+						<dl class="layui-nav-child">
+							<dd><a href="html/Yback/Yview.html" id="Yview">欢乐谷可视化</a></dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="layui-body">
+			<div style="padding: 15px;">
+
+				<h1></h1>
+				<br>
+				<script type="text/javascript" src="pano2vr_player.js">
+				</script>
+				<div id="container" style="width:600px;height:550px;">
+					This content requires HTML5/CSS3, WebGL, or Adobe Flash Player Version 9 or higher.
+				</div>
+				<script type="text/javascript">
+
+					// check for CSS3 3D transformations and WebGL
+					if (ggHasHtml5Css3D() || ggHasWebGL()) {
+						// use HTML5 panorama
+
+						// create the panorama player with the container
+						pano=new pano2vrPlayer("container");
+						pano.readConfigUrl("1_out.xml");
+						// hide the URL bar on the iPhone
+						setTimeout(function() { hideUrlBar(); }, 10);
+					} else
+					if (swfobject.hasFlashPlayerVersion("10.0.0")) {
+						var flashvars = {};
+						var params = {};
+						// enable javascript interface
+						flashvars.externalinterface="1";
+						params.quality = "high";
+						params.bgcolor = "#ffffff";
+						params.allowscriptaccess = "sameDomain";
+						params.allowfullscreen = "true";
+						var attributes = {};
+						attributes.id = "pano";
+						attributes.name = "pano";
+						attributes.align = "middle";
+						flashvars.panoxml="1_out.xml";
+						params.base=".";
+						swfobject.embedSWF(
+								"pano2vr_player.swf", "container",
+								"640", "480",
+								"9.0.0", "",
+								flashvars, params, attributes);
+
+					}
+				</script>
+				<noscript>
+					<p><b>Please enable Javascript!</b></p>
+				</noscript>
+				<div class="wrapper" style="height: 0">
+					<div class="box" style="left: 650px;">
+						<div class="imgBx">
+							<img src="img/5.jpg">
+						</div>
+						<div class="content" style="letter-spacing: 2px;">
+							<h3 style="font-size: 24px;">游玩提示</h3>
+							<p>
+							<h4 style="font-size: 18px;">用时参考</h4>
+							<h5 style="font-size: 16px;">建议游玩0.5-1天
+							</h5>
+
+							<h4 style="font-size: 18px ">推荐玩法</h4>
+							<h5 style="text-indent: 2px;font-size: 16px;">
+								霹雳战车→太阳神车→蒙蒂卡罗赛道→打
+								码头情景剧场→木翼双龙→摩天塔→野人谷漂流→激
+								流勇进→皇家转马→异度空间→DISC0→魔幻风车→飓
+								风飞椅→天地双雄;
+							</h5>
+							<h4 style="font-size: 18px">其他</h4>
+							欢乐谷景区入园检票口旁提供收费的寄存包裹服务;
+							<h4 style="font-size: 18px;color: red">安全提示</h4>
+							<h5 style="text-indent: 2px;font-size: 16px;">
+								1.景区在重要节假日客流量会猛增，此时各主要游乐
+								项目前都会排长队，建议错峰游览。
+								2.景区内，部分项目不适合高血压、心脏病患者
+								椎背部疾病患者、孕妇游玩;部分项目对参与游宿泉身
+								高、腰围、体重等设有要求限制。
+								3.如碰到恶劣天气部分设施将被关闭，因此出行前请
+								了解即时天气情况。
+							</h5>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="layui-footer">
+			<!-- 底部固定区域 -->
+			© Travel.com - 虚拟展厅
+		</div>
+	</div>
+	<script src="layui/layui.js" charset="utf-8"></script>
+
+	</body>
+</html>

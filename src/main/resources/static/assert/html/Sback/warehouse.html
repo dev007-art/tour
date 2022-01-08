@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>旅游管理系统</title>
+	<link rel="stylesheet" href="../../layui/css/layui.css">
+    <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
+        <script>
+        $(function () {
+            $("#a").click(function () {
+                window.location.href = "/back";
+            });
+            $("#b").click(function () {
+                window.location.href = "/viewproduct";
+            });
+            $("#c").click(function () {
+                window.location.href = "/viewmoney";
+            });
+        })
+    </script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img src="../../img/logo/HLG.png" style="width: 50%; height: 120%;"/>
+
+		</div>
+		<ul class="layui-nav layui-layout-left">
+		   <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷管理系统</a></li>
+		</ul>
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+					武汉欢迎您：&nbsp;&nbsp;商家
+				</a>
+			</li>
+			<li class="layui-nav-item">
+				<a href="login.html"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+					告辞
+				</a>
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;商家管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="a" href="#">商品管理</a></dd>
+                        <dd><a href="#">仓库管理</a></dd>
+                    </dl>
+                </li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+					<dl class="layui-nav-child">
+						<dd><a id="b" href="#">热门商品</a></dd>
+						<dd><a id="c" href="#">盈利情况</a></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <!-- 搜索框 -->
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <form action="usersSearchback" method="post">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">账号名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">库管名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                            </button>&nbsp;
+                            <button type="button" class="layui-btn " onclick="doAdd()">
+                                <i class="layui-icon">&#xe608;</i> 添加
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 表格 -->
+            <div style="width:100%" name="divtest">
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © Travel.com - 供应商仓库管理
+    </div>
+</div>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<!-- 头部工具栏事件 -->
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+<!-- 监听行工具事件 -->
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 设置表格基本元素 -->
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'//渲染的目标对象
+            ,url:'../../warehouse.json'//数据接口
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,title: '管理员信息汇总'//文件导出时的大标题
+            ,text: {
+                none: '暂无相关数据'
+            }
+            ,page: true
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'wid', title:'仓库号', width:150, fixed: 'left', unresize: true, edit: 'text'}
+                ,{field:'wname', title:'库管', width:150, edit: 'text'}
+                ,{field:'wproduct', title:'现存商品', width:200, edit: 'text'}
+                ,{field:'wmark', title:'描述信息', width:200, edit: 'text'}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]]
+
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('请管理员结合实际修改信息！');
+                    break;
+            };
+        });
+
+        //监听行工具事件:删除和修改操作
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.open({
+                    type: 2
+                    ,title: '编辑仓库'
+                    ,content: 'warehouseedit.html'
+                    ,maxmin: true
+                    ,anim: 1 //0-6的动画形式，-1不开启
+                    ,area: ['500px', '350px']
+                    ,success: function(layero, index){
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        console.log(body.html()) //得到iframe页的body内容
+                        body.find('#wid').val(wid)
+                        body.find('#wnamen').val(wnamen)
+                        body.find('#wproduct').val(wproduct)
+                        body.find('#wmark').val(wmark)
+                    }
+                });
+            }
+
+        });
+    });
+
+    function doAdd() {
+        layer.open({
+            type: 2
+            ,title: '增添仓库'
+            ,content: 'warehouseadd.html'
+            ,maxmin: true
+            ,anim: 1 //0-6的动画形式，-1不开启
+            ,area: ['500px', '350px']
+        });
+    }
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>武汉欢乐谷可视化管理系统</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img src="../../img/logo/HLG.png" style="width: 50%; height: 120%;"/>
+
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷可视化管理系统</a></li>
+        </ul>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+                    武汉欢迎您：&nbsp;&nbsp;开发商
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="login.html"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+                    告辞
+                </a>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;区域管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="../Kback.html">人流量管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-tabs"></i>&nbsp;&nbsp;&nbsp;&nbsp;账号管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="Sid.html">商家账号</a></dd>
+                        <dd><a href="Yid.html">游客账号</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-auz"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="people.html">人流量分析</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+            <!-- 搜索框 -->
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <form action="supplierSearchback" method="post"><!-- 点击搜索按钮跳转到相应位置 -->
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">日期</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="pname" placeholder="请输入" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                            </button>&nbsp;
+                            <button type="button" class="layui-btn " onclick="doAdd()">
+                                <i class="layui-icon">&#xe608;</i> 添加
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 表格 -->
+            <div style="width:100%">
+                <div class="layui-form">
+                    <form class="layui-form">
+                        <table class="layui-table" id="test" lay-filter="test">
+                            <colgroup>
+                                <col width="20">
+                                <col width="200">
+                                <col width="200">
+                                <col width="200">
+                                <col width="200">
+                            </colgroup>
+                            <thead class="checkallbox">
+                            <tr >
+                                <th><input lay-skin="primary" type="checkbox" id="checkall" name="check" lay-filter="allChoose" value="checkall"/></th>
+                                <th>编号</th>
+                                <th>区域名称</th>
+                                <th>日期</th>
+                                <th>人流量/人次</th>
+                            </tr>
+                            </thead>
+                            <tbody class="seach-box">
+                            <!-- <c:forEach items="${pageBean.plist}" var="product"> -->
+                                <tr>
+                                    <td><input type="checkbox" title="" lay-skin="primary" name="checkone"></td>
+                                    <td class="center">1</td>
+                                    <td class="center">欢乐时光</td>
+                                    <td class="center">2020年1月</td>
+                                    <td class="center">
+                                        <div class="layui-input-inline">
+                                            <input id="Jprice" type="text" name="Jprice" lay-verify="required" placeholder="xx/人次" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" title="" lay-skin="primary" name="checkone"></td>
+                                    <td class="center">1</td>
+                                    <td class="center">欢乐时光</td>
+                                    <td class="center">2020年2月</td>
+                                    <td class="center">
+                                        <div class="layui-input-inline">
+                                            <input id="Jprice2" type="text" name="Jprice2" lay-verify="required" placeholder="xx/人次" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </td>
+                                </tr>
+                            <!-- </c:forEach> -->
+                            </tbody>
+                        </table>
+                        &nbsp;
+                        <a href=""><i class="layui-icon  layui-icon-refresh" style="font-size: 22px; color: #758697;"></i></a><!-- 刷新按钮 -->
+                        &nbsp;&nbsp;&nbsp;
+                        <span id="demo0"></span>&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="layui-btn layui-btn-radius" onclick="doEdit()">
+                           提交
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © Travel.com - 区域管理
+    </div>
+</div>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+    });
+</script>
+<!-- 表单 -->
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+    });
+</script>
+<!-- 复选框 -->
+<script type="text/javascript">
+    layui.use(['form','jquery'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        //点击全选, 勾选
+        form.on('checkbox(allChoose)', function (data) {
+            var child = $(".seach-box input[type='checkbox']");
+            child.each(function (index, item) {
+                item.checked = data.elem.checked;
+            });
+            form.render('checkbox');
+        });
+    });
+</script>
+<!-- 分页 -->
+<script>
+    layui.use(['laypage', 'layer'], function(){
+        var laypage = layui.laypage
+            ,layer = layui.layer;
+
+        //总页数低于页码总数
+        laypage.render({
+            elem: 'demo0'
+            ,count: 50 //数据总数
+        });
+    });
+
+</script>
+<!--删除增加编辑操作 -->
+<script type="text/javascript">
+    function doDelect(pid) {
+        layer.alert('是否确定删除该区域？', {icon: 5}
+            ,function(){
+                location.href="productDelect?pid="+pid;
+            }
+        );
+    }
+    function doEdit(pid,pname,Jprice,Xprice,time) {
+        layer.alert('是否确定提交？', {icon: 5}
+            ,function(){
+                location.href="productedit?pid="+pid;
+            }
+        );
+    }
+    function doAdd() {
+        layer.open({
+            type: 2
+            ,title: '增添区域'
+            ,content: 'peopleadd.html'
+            ,maxmin: true
+            ,anim: 1 //0-6的动画形式，-1不开启
+            ,area: ['500px', '350px']
+        });
+    }
+</script>
+</body>
+</html>

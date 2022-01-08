@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>旅游管理系统</title>
+	<script src="../../js/echarts.min.js"></script>
+	<link rel="stylesheet" href="../../layui/css/layui.css">
+	<script src="../../static/assert/js/jq.js"></script>
+	<script>
+		var a=$(this).parents("tr").find("td:eq(0)").text();
+		alert(a)
+	</script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img src="../../img/logo/andios.png" style="width: 40%; height: 100%;"/>
+			旅游管理系统&nbsp;
+		</div>
+		<tr>
+			<td id="a">aaa</td>
+	</tr>
+
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+					欢迎您：&nbsp;&nbsp;商家
+				</a>
+			</li>
+			<li class="layui-nav-item">
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;商家管理</a>
+					<dl class="layui-nav-child">
+						<dd><a href="../../static/assert/html/back.html">商品管理</a></dd>
+						<dd><a href="warehouse.html">仓库管理</a></dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+					<dl class="layui-nav-child">
+						<dd><a href="view.html">可视化分析</a></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div style="padding: 15px;">
+           <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+           <div id="main" style="width: 600px;height:400px;"></div>
+           <script>
+           	var myChart = echarts.init(document.getElementById('main'));
+           	var option={
+           			title: {
+           				text: '商品销量'
+           			},
+           			tooltip: {},
+           			legend: {
+           				data:[{
+           					name:'销量',
+           					icon:'triangle',
+           					textStyle:{color:'red'},
+           					}]
+           			},
+           			xAxis: {
+           				data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+           			},
+           			yAxis: {},
+           			series: [{
+           			    name: '销量',  // 系列名称
+           			    type: 'bar',  // 系列图表类型
+           			    data: [5, 20, 36, 10, 10, 20]  // 系列中的数据内容
+           			}]
+           		};
+           		myChart.setOption(option);
+           </script>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © FeiYi.com - 供应商仓库管理
+    </div>
+</div>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+
+</body>
+</html>
+

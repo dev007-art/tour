@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>旅游管理系统</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assert/css/reset.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/assert/css/style.css}" />
+    <script th:src="@{/assert/js/jq.js}"></script>
+    <!-- 引入 echarts.js -->
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js" th:src="@{/assert/js/echarts.min.js}"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css" th:href="@{/assert/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img th:src="@{/assert/img/logo/HLG.png}" style="width: 50%; height: 120%;"/>
+
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷可视化管理系统</a></li>
+        </ul>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+                    武汉欢迎您：&nbsp;&nbsp;游客
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a th:href="@{/}"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+                    告辞
+                </a>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;欢乐谷展示</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/Yback}">区域地图</a></dd>
+                        <dd><a th:href="@{/viewshow}">虚拟展厅</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/Yview}">欢乐谷可视化</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div style="padding: 15px;height:100%">
+            <img th:src="@{/assert/img/huanle/00.png}" width="1100" height="600" usemap="#Map" border="0" />
+            <map name="Map" id="Map">
+                <area shape="poly" coords="219,159,250,197,289,216,302,220,310,215,312,191,326,183,352,175,375,172,414,170,411,142,387,122,390,107,404,101,409,90,427,91,428,102,448,113,435,138,424,155,424,167,448,171,498,191,540,201,583,194,659,194,693,174,662,136,579,88,513,69,465,71,412,75,361,79,305,92,247,113,222,139" href="http://wh.happyvalley.cn/index.php?hljc.html" target="_blank" />
+                <area shape="poly" coords="331,213,358,202,379,188,398,183,399,176,414,174,413,140,396,128,391,119,393,109,404,104,412,92,421,95,428,105,443,112,435,134,424,151,425,171,438,174,449,175,461,179,467,186,497,199,517,222,526,232,514,251,495,275,445,283,411,285,394,281,379,274,377,253,357,236,341,227" href="http://wh.happyvalley.cn/index.php?ygd.html" target="_blank" />
+                <area shape="poly" coords="546,227,567,214,602,209,628,203,673,189,715,178,744,178,765,202,766,234,750,263,765,275,742,304,715,326,650,362,643,383,617,378,605,371,595,353,563,353,551,339,539,297,529,264,538,241" href="http://wh.happyvalley.cn/index.php?jfw.html" target="_blank" />
+                <area shape="poly" coords="178,289" href="#" />
+                <area shape="poly" coords="165,290,185,249,203,222,221,217,274,214,313,224,339,238,349,285,328,314,313,340,298,358,272,364,223,360,198,350,170,329" href="http://wh.happyvalley.cn/index.php?yltt.html" target="_blank" />
+                <area shape="poly" coords="130,401,152,388,184,364,235,368,288,369,320,388,352,382,364,401,369,449,373,485,369,516,354,537,323,543,261,539,217,532,180,512,151,484,128,434,123,415" href="http://wh.happyvalley.cn/index.php?jssj.html" target="_blank" />
+                <area shape="poly" coords="379,389,401,388,439,388,446,420,438,448,437,474,433,501,438,529,450,554,443,573,416,580,380,582,323,583,286,587,239,582,213,568,223,548,265,551,299,556,330,553,345,550,363,541,372,524,375,505,377,458,375,428,372,404" href="http://wh.happyvalley.cn/index.php?mxdd.html.html" target="_blank" />
+                <area shape="poly" coords="450,466,464,464,480,467,510,474,515,496,533,509,539,525,567,532,576,548,547,573,501,582,458,576,453,561,450,541,445,529,438,510,442,486,442,473" href="http://wh.happyvalley.cn/index.php?hlhy.html" target="_blank" />
+                <area shape="poly" coords="518,416,561,417,587,420,609,413,638,422,648,449,639,484,623,519,591,548,575,546,546,523,524,497,517,473,481,466,474,451,487,431" href="http://wh.happyvalley.cn/index.php?ktgc.html" target="_blank" />
+                <area shape="poly" coords="458,295,481,293,508,282,528,285,520,350,536,351,557,354,579,355,593,358,605,375,628,386,644,387,639,416,596,416,558,416,518,413,490,425,462,432,451,420,446,395,447,358" href="http://wh.happyvalley.cn/index.php?hlsg.html" target="_blank" />
+            </map>
+         <!--   <div class="wrapper" style="width: 300px;height: 600px;top: -600px;left: 670px;">
+                <div class="content wzly">
+                    <div id="single" class="conmain">
+                        <div class="content_r">
+                            <div class="content_main">
+                                <div class="content_primary yqdt">
+                                    <div class="yqdtcon">
+                                        <ul>
+                                            <li>
+                                                <img class="titimg" th:src="@{/assert/img/huanle/dt1.png}" width="10%" height="30%">
+                                                <div class="txt" style="top:-20px;width: 30%">
+                                                    <p style="padding-top: 25px;">“欢乐海洋”融科技性、互动性、观赏性为一体，打造一站式狂欢，欢乐加倍升级！丰富的游玩体验、七大亲子互动设备让游客眼界加倍、亲情加倍、体验加倍，一票通玩，全家出动随时畅享狂欢！</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img class="titimg" th:src="@{/assert//img/huanle/dt4.png}" width="10%" height="30%">
+                                                <div class="txt" style="top:-20px;width: 35%">
+                                                    <p style="padding-top: 28px;">极速世界是是最富速度刺激的力量体验区,位于公园入口区的右侧,与魔幻城堡区相呼应。在规划上,以极速飞车（弹射过山车）围合出娱乐广场空间,以太阳神车（大摆锤）为广场焦点,蒙地卡罗赛道呼啸期间；以极限表演场强化演艺功能,营造刺激氛围。</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img class="titimg" th:src="@{/assert/img/huanle/dt5.png}" width="10%" height="30%">
+                                                <div class="txt" style="top:-20px;width: 35%">
+                                                    <p style="padding-top: 28px;">欢乐江城主题区以荆楚地域人文为背景,以多彩诙谐的语风串联出一幅幅欢欣鼓舞的侠义场面,生动地再现了湖北地区的文化风情,规划了水寨集市、水岸江城两大版块,景观丰富。</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <img class="titimg" th:src="@{/assert/img/huanle/dt6.png}" width="10%" height="30%">
+                                                <div class="txt" style="top:-20px;width: 35%">
+                                                    <p style="padding-top: 28px;">飓风湾主题区是水上项目的聚集区,以美洲海域风情为文化背景,突出阳光、运动、活力和热情,以舒展的空间效果结合沙滩、海浪元素,创造主题区的特色体验。</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © Travel.com - 区域地图
+    </div>
+</div>
+<script src="../../js/jquery-2.1.4.min.js" th:src="@{/assert/js/jq.js}"></script>
+<script th:src="@{/assert/layui/layui.js}" charset="utf-8"></script>
+<script type="text/javascript">
+    swfobject.registerObject("FlashID");
+</script>
+</body>
+</html>
+

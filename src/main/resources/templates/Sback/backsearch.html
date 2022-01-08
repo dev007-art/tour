@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>旅游管理系统</title>
+	<link rel="stylesheet" th:href="@{/assert/layui/css/layui.css}">
+	<link rel="stylesheet" th:href="@{/assert/css/bootstrap.min.css}">
+	<script type="application/javascript" th:src="@{/assert/js/jq.js}"></script>
+	<script type="application/javascript" th:src="@{/assert/js/bootstrap.mim.js}"></script>
+	<script type="application/javascript">
+        $(function(){
+            /*公共部分
+             */
+            if(sessionStorage.getItem('user_token')==null){
+                window.location.href="/";
+            }
+        });
+	</script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header">
+		<div class="layui-logo">
+			<img th:src="@{/assert/img/logo/HLG.png}"  style="width: 60%; height: 120%;"/>
+		</div>
+		<ul class="layui-nav layui-layout-left">
+		   <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷管理系统</a></li>
+		</ul>
+		<!-- 头部区域（可配合layui已有的水平导航） -->
+		<ul class="layui-nav layui-layout-right">
+			<li class="layui-nav-item">
+				<a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+					武汉欢迎您：&nbsp;&nbsp;商家
+				</a>
+			</li>
+			<li class="layui-nav-item">
+				<a th:href="@{/}"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+					告辞
+				</a>
+		</ul>
+	</div>
+	<div class="layui-side layui-bg-black">
+		<div class="layui-side-scroll">
+			<!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+			<ul class="layui-nav layui-nav-tree"  lay-filter="test">
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+					<dl class="layui-nav-child">
+						<dd><a th:href="@{/viewproduct}">热门商品</a></dd>
+						<dd><a th:href="@{/viewmoney}">盈利情况</a></dd>
+					</dl>
+				</li>
+				<li class="layui-nav-item layui-nav-itemed">
+					<a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;商家管理</a>
+					<dl class="layui-nav-child">
+						<dd><a th:href="@{/back}">商品管理</a></dd>
+						<dd><a th:href="@{/warehouse}">仓库管理</a></dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="layui-body">
+		<!-- 内容主体区域 -->
+		<div style="padding: 15px;">
+			<!-- 搜索框 -->
+			<div class="layui-form layui-card-header layuiadmin-card-header-auto">
+				<form th:action="@{/search}" method="post"><!-- 点击搜索按钮跳转到相应位置 -->
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">商品名称</label>
+							<div class="layui-input-inline">
+								<input type="text" name="pname" placeholder="请输入" autocomplete="off" class="layui-input" id="NAME">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">销售价格</label>
+							<div class="layui-input-inline">
+								<input type="text" name="market_price" placeholder="请输入" autocomplete="off" class="layui-input" id="price">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button type="submit" class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search" id="search">
+								<i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+							</button>&nbsp;
+							<button type="button" class="layui-btn " th:onclick="doAdd()" >
+								<i class="layui-icon">&#xe608;</i> 添加
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+			<!-- 表格 -->
+			<div style="width:100%">
+				<div class="layui-form">
+					<form class="layui-form">
+						<table class="layui-table" id="test" lay-filter="test">
+							<colgroup>
+								<col width="20">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+								<col width="70">
+							</colgroup>
+							<thead class="checkallbox">
+							<tr >
+								<th><input lay-skin="primary" type="checkbox" id="checkall" name="check" lay-filter="allChoose" value="checkall"/></th>
+								<th>编号</th>
+								<th>名称</th>
+								<th>进价/元</th>
+								<th>销价/元</th>
+								<th>图片</th>
+								<th>销量</th>
+								<th>库存</th>
+								<th>商品描述</th>
+								<th>总利润</th>
+								<th>操作</th>
+							</tr>
+							</thead>
+							<tbody class="seach-box">
+							<!-- <c:forEach items="${pageBean.plist}" var="product"> -->
+							<div th:each="c:${session.search}">
+								<tr id="table">
+									<td><input type="checkbox" title="" lay-skin="primary" name="checkone"></td>
+									<td class="center" id="id">[[${c.id}]]</td>
+									<td class="center" th:text="${c.name}"></td>
+									<td class="center" th:text="${c.buyingPrice}"></td>
+									<td class="center" th:text="${c.sellingPrice}"></td>
+									<td class="center"><img th:src="@{/showImg/{id}(id=${c.id})}" style="height: 60px; width: 60px; display: inline-block;"></td>
+									<td class="center" th:text="${c.proceeds}"></td>
+									<td class="center" th:text="${c.stock}"></td>
+									<td class="center" th:text="${c.desc}"></td>
+									<td class="center" th:text="${c.proceeds*(c.sellingPrice-c.buyingPrice)}"></td>
+									<td>
+										<button type="button" class="layui-btn layui-btn-xs" id="update" th:onclick="doEdit([[${c.id}]],[[${c.name}]],[[${c.buyingPrice}]],[[${c.sellingPrice}]],[[${c.proceeds}]],[[${c.desc}]],[[${c.stock}]])">编辑</button>
+										<button type="button" class="layui-btn layui-btn-danger layui-btn-xs" id="delete" th:onclick="doDelect([[${c.id}]])">删除</button>
+									</td>
+								</tr>
+							</div>
+							<!-- </c:forEach> -->
+							</tbody>
+						</table>
+                        &nbsp;
+                        &nbsp;&nbsp;&nbsp;
+					</form>
+							<nav aria-label="Page navigation">
+								<ul class="pagination">
+									<li>
+										<a href="#" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+										<li><a>1</a></li>
+									<li>
+										<a href="#" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+					<a th:href="@{/back}"><i class="layui-icon layui-icon-refresh" style="font-size: 22px; color: #758697;"></i></a><!-- 刷新按钮 -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-footer">
+		<!-- 底部固定区域 -->
+		© Travel.com - 商品管理
+	</div>
+</div>
+</body>
+<script th:src="@{/assert/layui/layui.js}" charset="utf-8"></script>
+<script>
+	//JavaScript代码区域
+	layui.use('element', function(){
+		var element = layui.element;
+	});
+</script>
+<!-- 表单 -->
+<script>
+	layui.use(['form'], function(){
+		var form = layui.form
+	});
+</script>
+<!-- 复选框 -->
+<script type="text/javascript">
+	layui.use(['form','jquery'], function () {
+		var form = layui.form;
+		var $ = layui.jquery;
+		//点击全选, 勾选
+		form.on('checkbox(allChoose)', function (data) {
+			var child = $(".seach-box input[type='checkbox']");
+			child.each(function (index, item) {
+				item.checked = data.elem.checked;
+			});
+			form.render('checkbox');
+		});
+	});
+</script>
+<!--删除增加编辑操作 -->
+<script type="text/javascript">
+	function doDelect(pid) {
+		layer.alert('是否确定删除该商品？', {icon: 5}
+				,function(){
+					location.href="/delete/"+pid;
+				}
+		);
+	}
+	function doEdit(id,name,buy,sell,proceed,desc,stock) {
+	    sessionStorage.setItem("Pname",name);
+        sessionStorage.setItem("id",id);
+	    sessionStorage.setItem("buy",buy);
+	    sessionStorage.setItem("sell",sell);
+	    sessionStorage.setItem("proceed",proceed);
+	    sessionStorage.setItem("desc",desc);
+	    sessionStorage.setItem("stock",stock);
+		layer.open({
+			type: 2
+			,title: '编辑商品'
+			,content: 'productedit'
+			,maxmin: true
+			,anim: -1 //0-6的动画形式，-1不开启
+			,area: ['500px', '550px']
+		});
+	}
+	function doAdd() {
+		layer.open({
+			type: 2
+			,title: '增添商品'
+			,content: 'productadd'
+			,maxmin: true
+			,anim: -1 //0-6的动画形式，-1不开启
+			,area: ['500px', '550px']
+		});
+	}
+</script>
+</body>
+</html>

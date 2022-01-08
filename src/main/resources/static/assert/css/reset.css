@@ -1,0 +1,81 @@
+/* 
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com 
+Twitter: @rich_clark
+*/
+
+html, body, div, span, 
+h1, h2, h3, h4, h5, h6, p,
+dl, dt, dd, ol, ul, li,
+form, label,input,textarea,
+table, tbody, tr, th, td,
+article, details, 
+footer, header, menu, nav, section{
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;font-family:"寰蒋闆呴粦";color: #666;
+}
+
+article,details,footer,header,menu,nav,section { 
+    display:block;
+}
+
+li{
+    list-style:none;
+}
+img{border: 0;}
+a {
+    margin:0;
+    padding:0;
+    border: 0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    text-decoration: none;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+input, select {
+    vertical-align:middle;
+    font-family:"寰蒋闆呴粦";
+    color: #666;
+}
+/*Reset the pseudo class*/
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder{
+  color: #666666;
+
+  text-overflow: ellipsis;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #666666;
+
+  text-overflow: ellipsis;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #666666;
+  text-overflow: ellipsis;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #666666;
+  text-overflow: ellipsis;
+}

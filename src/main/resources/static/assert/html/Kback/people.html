@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>武汉欢乐谷可视化管理系统</title>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js" th:src="@{/assert/js/echarts.min.js}"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css" th:href="@{/assert/layui/css/layui.css}">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img th:src="@{/assert/img/logo/HLG.png}" style="width: 50%; height: 120%;"/>
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" ><a href="" style="font-size: 18px; color: #fffbee;">武汉欢乐谷可视化管理系统</a></li>
+        </ul>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="layui-icon layui-icon-username" style="font-size: 20px; color: #009688;"></i>
+                    武汉欢迎您：&nbsp;&nbsp;开发商
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="login.html"><i class="layui-icon layui-icon-logout" style="font-size: 20px; color: #009688;"></i>
+                    告辞
+                </a>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;区域管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/Kback}">人流量管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-tabs"></i>&nbsp;&nbsp;&nbsp;&nbsp;账号管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/Sid}">商家账号</a></dd>
+                        <dd><a th:href="@{/Yid}">游客账号</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-auz"></i>&nbsp;&nbsp;&nbsp;&nbsp;可视化分析</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#">人流量分析</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <div>
+                <div class="layui-col-lg6">
+                    <span id="container" style="width: 650px;height:600px;"></span>
+                    <script>
+                        var myChart = echarts.init(document.getElementById('container'));
+                        //1.准备树的数据
+                        var data = [
+                            {name:"武汉欢乐谷",value:"01",sj:"-"},
+                            {name:"欢乐江城",value:"0101",sj:"01"},
+                            {name:"渔光岛",value:"0102",sj:"01"},
+                            {name:"飓风湾",value:"0103",sj:"01"},
+                            {name:"欢乐时光",value:"0104",sj:"01"},
+                            {name:"甜品王国",value:"0105",sj:"01"},
+
+                            {name:"旋转木马",value:"010101",sj:"0101"},
+                            {name:"生态园地",value:"010102",sj:"0101"},
+                            {name:"赏鸟园",value:"010103",sj:"0101"},
+
+                            {name:"潜水艇",value:"010201",sj:"0102"},
+                            {name:"划船",value:"010202",sj:"0102"},
+                            {name:"海洋世界",value:"010203",sj:"0102"},
+
+                            {name:"大摆锤",value:"010301",sj:"0103"},
+                            {name:"中心公园",value:"010302",sj:"0103"},
+                            {name:"过山车",value:"010303",sj:"0103"},
+
+                            {name:"互动体验馆",value:"010401",sj:"0104"},
+
+                            {name:"冰淇淋甜筒",value:"010501",sj:"0105"},
+                            {name:"奶茶小站",value:"010502",sj:"0105"},
+
+                        ];
+                        var treeData ;
+                        window.onload = function(){
+                            //2.处理数据
+                            treeData = transData(data, 'value', 'sj', 'children');
+                            //3.展示数据
+                            drawTree(treeData);
+                        }
+
+                        /**2.数据处理成层级关系的数据***/
+                        function transData(a, idStr, pidStr, childrenStr) {
+                            var r = [], hash = {}, id = idStr, pid = pidStr, children = childrenStr, i = 0, j = 0, len = a.length;
+                            for (; i < len; i++) {
+                                hash[a[i][id]] = a[i];
+                            }
+                            for (; j < len; j++) {
+                                var aVal = a[j], hashVP = hash[aVal[pid]];
+                                if (hashVP) {
+                                    !hashVP[children] && (hashVP[children] = []);
+                                    hashVP[children].push(aVal);
+                                } else {
+                                    r.push(aVal);
+                                }
+                            }
+                            return r;
+                        }
+
+                        /**
+                         *3. 画树
+                         */
+                        function drawTree(treeData) {
+                            var  myChart = echarts.init(document.getElementById("container"));//div元素节点的对象
+                            myChart.setOption({
+                                tooltip : {
+                                    trigger : 'item',
+                                    triggerOn : 'mousemove'
+                                },
+                                series : [ {
+                                    type : 'tree',
+                                    name : 'TREE_ECHARTS',
+                                    data : treeData,
+                                    top : '2%',
+                                    left : '20%',
+                                    bottom : '2%',
+                                    right : '15%',
+                                    symbolSize : 7,
+                                    label : {
+                                        normal : {
+                                            position : 'left',
+                                            verticalAlign : 'middle',
+                                            align : 'right'
+                                        }
+                                    },
+                                    leaves : {
+                                        label : {
+                                            position : 'right',
+                                            verticalAlign : 'middle',
+                                            align : 'left'
+                                        }
+                                    },
+                                    expandAndCollapse : true ,
+                                    initialTreeDepth : 2  //展示层级数,默认是2
+                                } ]
+                            });
+
+                        }
+
+
+
+                    </script>
+                </div>
+                <div class="layui-col-lg6">
+                    <span id="main2" style="width: 650px;height:600px;"></span>
+                    <script type="text/javascript">
+                        // 基于准备好的dom，初始化echarts实例
+                        var myChart = echarts.init(document.getElementById('main2'));
+                        var data1 = [
+                            [94,66,110,78,134,56,88,45,72,45,68,90],
+                        ];
+                        var data2 = [
+                            [124,66,56,67,89,56,88,45,72,189,33,22],
+                        ];
+                        var data3 = [
+                            [13,97,134,178,77,88,99,100,90,65,11,22],
+                        ];
+                        var data4 = [
+                            [199,122,134,178,77,88,99,100,90,65,11,22],
+                        ];
+                        var data5 = [
+                            [94,77,110,78,56,56,88,45,72,45,68,90],
+                        ];
+                        var lineStyle = {
+                            normal: {
+                                width: 1,
+                                opacity: 0.5
+                            }
+                        };
+
+                        var option = {
+                            backgroundColor: '#161627',
+                            title: {
+                                text: '某区域人流量全年一览（单位：万人次）',
+                                left: 'center',
+                                textStyle: {
+                                    color: '#eee'
+                                }
+                            },
+                            legend: {
+                                bottom: 5,
+                                data: ['欢乐江城', '渔光岛', '飓风湾','欢乐时光', '甜品王国'],
+                                itemGap: 20,
+                                textStyle: {
+                                    color: '#ffd51c',
+                                    fontSize: 14
+                                },
+                                selectedMode: 'single'
+                            },
+                            radar: {
+                                indicator: [
+                                    {name: '2020/12', max: 200},
+                                    {name: '2020/11',max: 200},
+                                    {name: '2020/10', max: 200},
+                                    {name: '2020/9', max: 200},
+                                    {name: '2020/8', max: 200},
+                                    {name: '2020/7', max: 200},
+                                    {name: '2020/6', max: 200},
+                                    {name: '2020/5',max: 200},
+                                    {name: '2020/4', max: 200},
+                                    {name: '2020/3', max: 200},
+                                    {name: '2020/2', max: 200},
+                                    {name: '2020/1', max: 200}
+                                ],
+                                shape: 'circle',
+                                splitNumber: 5,
+                                name: {
+                                    textStyle: {
+                                        color: 'rgb(238, 197, 102)'
+                                    }
+                                },
+                                splitLine: {
+                                    lineStyle: {
+                                        color: [
+                                            'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                            'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                            'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                                        ].reverse()
+                                    }
+                                },
+                                splitArea: {
+                                    show: false
+                                },
+                                axisLine: {
+                                    lineStyle: {
+                                        color: 'rgba(238, 197, 102, 0.5)'
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    name: '欢乐江城',
+                                    type: 'radar',
+                                    lineStyle: lineStyle,
+                                    data: data1,
+                                    symbol: 'none',
+                                    itemStyle: {
+                                        color: '#f9cc1b'
+                                    },
+                                    areaStyle: {
+                                        opacity: 0.1
+                                    }
+                                },
+                                {
+                                    name: '渔光岛',
+                                    type: 'radar',
+                                    lineStyle: lineStyle,
+                                    data: data2,
+                                    symbol: 'none',
+                                    itemStyle: {
+                                        color: '#e4122f'
+                                    },
+                                    areaStyle: {
+                                        opacity: 0.1
+                                    }
+                                },
+                                {
+                                    name: '飓风湾',
+                                    type: 'radar',
+                                    lineStyle: lineStyle,
+                                    data: data3,
+                                    symbol: 'none',
+                                    itemStyle: {
+                                        color: 'rgb(96,238,59)'
+                                    },
+                                    areaStyle: {
+                                        opacity: 0.1
+                                    }
+                                },
+                                {
+                                    name: '欢乐时光',
+                                    type: 'radar',
+                                    lineStyle: lineStyle,
+                                    data: data4,
+                                    symbol: 'none',
+                                    itemStyle: {
+                                        color: 'rgb(73,98,238)'
+                                    },
+                                    areaStyle: {
+                                        opacity: 0.1
+                                    }
+                                },
+                                {
+                                    name: '甜品王国',
+                                    type: 'radar',
+                                    lineStyle: lineStyle,
+                                    data: data5,
+                                    symbol: 'none',
+                                    itemStyle: {
+                                        color: '#20e49d'
+                                    },
+                                    areaStyle: {
+                                        opacity: 0.1
+                                    }
+                                }
+                            ]
+                        };
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                    </script>
+                </div>
+            </div>
+            <div>
+                <div class="layui-col-lg12">
+                    <div align="center" style="font-size: 18px;margin: 25px">
+                        五大区域人流量全年对比分析图（单位：万人次）
+                    </div>
+                    <span id="main3" style="width: 1300px;height:600px;"></span>
+                    <script type="text/javascript">
+                        var myChart = echarts.init(document.getElementById('main3'));
+                        setTimeout(function () {
+                            option = {
+                                legend: {},
+                                tooltip: {
+                                    trigger: 'axis',
+                                    showContent: false
+                                },
+                                dataset: {
+                                    source: [
+                                        ['product', '2020/1', '2020/2', '2020/3', '2020/4', '2020/5', '2020/6','2020/7', '2020/8', '2020/9', '2020/10', '2020/11', '2020/12'],
+                                        ['欢乐江城', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1,56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
+                                        ['渔光岛', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7,51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
+                                        ['飓风湾', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5,40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
+                                        ['欢乐时光', 25.2, 37.1, 41.2, 18, 33.9, 49.1,25.2, 37.1, 41.2, 18, 33.9, 49.1],
+                                        ['甜品王国', 25.2, 37.1, 41.2, 18, 33.9, 49.1,25.2, 37.1, 41.2, 18, 33.9, 49.1]
+                                    ]
+                                },
+                                xAxis: {type: 'category'},
+                                yAxis: {gridIndex: 0},
+                                grid: {top: '55%'},
+                                series: [
+                                    {type: 'line', smooth: true, seriesLayoutBy: 'row', emphasis: {focus: 'series'}},
+                                    {type: 'line', smooth: true, seriesLayoutBy: 'row', emphasis: {focus: 'series'}},
+                                    {type: 'line', smooth: true, seriesLayoutBy: 'row', emphasis: {focus: 'series'}},
+                                    {type: 'line', smooth: true, seriesLayoutBy: 'row', emphasis: {focus: 'series'}},
+                                    {type: 'line', smooth: true, seriesLayoutBy: 'row', emphasis: {focus: 'series'}},
+                                    {
+                                        type: 'pie',
+                                        id: 'pie',
+                                        radius: '30%',
+                                        center: ['50%', '25%'],
+                                        emphasis: {focus: 'data'},
+                                        label: {
+                                            formatter: '{b}: {@2020/1} ({d}%)'
+                                        },
+                                        encode: {
+                                            itemName: 'product',
+                                            value: '2020/1',
+                                            tooltip: '2020/1'
+                                        }
+                                    }
+                                ]
+                            };
+
+                            myChart.on('updateAxisPointer', function (event) {
+                                var xAxisInfo = event.axesInfo[0];
+                                if (xAxisInfo) {
+                                    var dimension = xAxisInfo.value + 1;
+                                    myChart.setOption({
+                                        series: {
+                                            id: 'pie',
+                                            label: {
+                                                formatter: '{b}: {@[' + dimension + ']} ({d}%)'
+                                            },
+                                            encode: {
+                                                value: dimension,
+                                                tooltip: dimension
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+
+                            myChart.setOption(option);
+
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © Travel.com - 人流量可视化
+    </div>
+</div>
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<!-- 头部工具栏事件 -->
+
+</body>
+</html>
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tour start="node2">
+  <panorama id="node2">
+    <view fovmode="0" pannorth="0">
+      <start pan="-117.2" fov="70" tilt="22.8"/>
+      <min pan="-180" fov="5" tilt="-118.5"/>
+      <max pan="152.2" fov="120" tilt="57.8"/>
+    </view>
+    <userdata title="" datetime="" description="" copyright="" tags="" author="" source="" comment="" info="" longitude="" latitude=""/>
+    <hotspots width="180" height="20" wordwrap="1">
+      <label width="180" backgroundalpha="1" enabled="1" height="20" backgroundcolor="0xffffff" bordercolor="0x000000" border="1" textcolor="0x000000" background="1" borderalpha="1" borderradius="1" wordwrap="1" textalpha="1"/>
+      <polystyle mode="0" backgroundalpha="0.2509803921568627" backgroundcolor="0x0000ff" bordercolor="0x0000ff" borderalpha="1"/>
+      <hotspot title="急速世界_过山车" target="" pan="99.3022" skinid="" url="{node3}" id="Point01" tilt="-12.5173"/>
+      <hotspot title="飓风湾_激流勇进" target="" pan="5.48255" skinid="" url="{node4}" id="Point02" tilt="-16.7725"/>
+    </hotspots>
+    <media/>
+    <input tile0url="images/1_o_0.jpg" prev5url="images/1_o_preview_5.jpg" prev4url="images/1_o_preview_4.jpg" prev3url="images/1_o_preview_3.jpg" prev2url="images/1_o_preview_2.jpg" prev1url="images/1_o_preview_1.jpg" prev0url="images/1_o_preview_0.jpg" tile5url="images/1_o_5.jpg" tilesize="743" tile4url="images/1_o_4.jpg" tile3url="images/1_o_3.jpg" tilescale="1.013459" tile2url="images/1_o_2.jpg" tile1url="images/1_o_1.jpg">
+      <preview color="0x808080"/>
+    </input>
+    <control simulatemass="1" lockedmouse="0" lockedkeyboard="0" dblclickfullscreen="0" invertwheel="0" lockedwheel="0" invertcontrol="1" speedwheel="1" sensitivity="8"/>
+  </panorama>
+  <panorama id="node3">
+    <view fovmode="0" pannorth="0">
+      <start pan="12.4" fov="70" tilt="-27.8"/>
+      <min pan="-90" fov="5" tilt="-90"/>
+      <max pan="131.2" fov="120" tilt="90"/>
+    </view>
+    <userdata title="" datetime="" description="" copyright="" tags="" author="" source="" comment="" info="" longitude="" latitude=""/>
+    <hotspots width="180" height="20" wordwrap="1">
+      <label width="180" backgroundalpha="1" enabled="1" height="20" backgroundcolor="0xffffff" bordercolor="0x000000" border="1" textcolor="0x000000" background="1" borderalpha="1" borderradius="1" wordwrap="1" textalpha="1"/>
+      <polystyle mode="0" backgroundalpha="0.2509803921568627" backgroundcolor="0x0000ff" bordercolor="0x0000ff" borderalpha="1"/>
+      <hotspot title="飓风湾_激流勇进" target="" pan="9.03189" skinid="" url="{node4}" id="Point01" tilt="10.7429"/>
+      <hotspot title="欢乐江城_旋转秋千" target="" pan="-62.9332" skinid="" url="{node2}" id="Point02" tilt="6.65867"/>
+    </hotspots>
+    <media/>
+    <input tile0url="images/2_o_0.jpg" prev5url="images/2_o_preview_5.jpg" prev4url="images/2_o_preview_4.jpg" prev3url="images/2_o_preview_3.jpg" prev2url="images/2_o_preview_2.jpg" prev1url="images/2_o_preview_1.jpg" prev0url="images/2_o_preview_0.jpg" tile5url="images/2_o_5.jpg" tilesize="743" tile4url="images/2_o_4.jpg" tile3url="images/2_o_3.jpg" tilescale="1.013459" tile2url="images/2_o_2.jpg" tile1url="images/2_o_1.jpg">
+      <preview color="0x808080"/>
+    </input>
+    <control simulatemass="1" lockedmouse="0" lockedkeyboard="0" dblclickfullscreen="0" invertwheel="0" lockedwheel="0" invertcontrol="1" speedwheel="1" sensitivity="8"/>
+  </panorama>
+  <panorama id="node4">
+    <view fovmode="0" pannorth="0">
+      <start pan="1.5" fov="70" tilt="-2.8"/>
+      <min pan="-180" fov="5" tilt="-90"/>
+      <max pan="83.6" fov="120" tilt="90"/>
+    </view>
+    <userdata title="" datetime="" description="" copyright="" tags="" author="" source="" comment="" info="" longitude="" latitude=""/>
+    <hotspots width="180" height="20" wordwrap="1">
+      <label width="180" backgroundalpha="1" enabled="1" height="20" backgroundcolor="0xffffff" bordercolor="0x000000" border="1" textcolor="0x000000" background="1" borderalpha="1" borderradius="1" wordwrap="1" textalpha="1"/>
+      <polystyle mode="0" backgroundalpha="0.2509803921568627" backgroundcolor="0x0000ff" bordercolor="0x0000ff" borderalpha="1"/>
+      <hotspot title="极速世界_过山车" target="" pan="12.5105" skinid="" url="{node3}" id="Point01" tilt="22.7065"/>
+      <hotspot title="欢乐江城_旋转秋千" target="" pan="-64.1729" skinid="" url="{node2}" id="Point02" tilt="22.7286"/>
+    </hotspots>
+    <media/>
+    <input tile0url="images/3_o_0.jpg" prev5url="images/3_o_preview_5.jpg" prev4url="images/3_o_preview_4.jpg" prev3url="images/3_o_preview_3.jpg" prev2url="images/3_o_preview_2.jpg" prev1url="images/3_o_preview_1.jpg" prev0url="images/3_o_preview_0.jpg" tile5url="images/3_o_5.jpg" tilesize="743" tile4url="images/3_o_4.jpg" tile3url="images/3_o_3.jpg" tilescale="1.013459" tile2url="images/3_o_2.jpg" tile1url="images/3_o_1.jpg">
+      <preview color="0x808080"/>
+    </input>
+    <control simulatemass="1" lockedmouse="0" lockedkeyboard="0" dblclickfullscreen="0" invertwheel="0" lockedwheel="0" invertcontrol="1" speedwheel="1" sensitivity="8"/>
+  </panorama>
+</tour>

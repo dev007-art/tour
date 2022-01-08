@@ -1,0 +1,7 @@
+{"code": 0
+,"msg": ""
+,"count": 3,
+  "data":[{"username":"Gongyingshang","name":"一号供应商","type":"A","telephone":"17632563225","time":"3年","money":"325,520","title":"是"},
+    {"username":"Gongyingshang2","name":"二号供应商","type":"B","telephone":"18896553261","time":"2年","money":"565,520","title":"是"},
+    {"username":"Gongyingshang3","name":"三号供应商","type":"A","telephone":"17656332647","time":"1年","money":"25,520","title":"否"}
+  ]}
